@@ -45,7 +45,13 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-	</dependencies>
+	
+   <dependency>
+     <groupId>com.github.michedev</groupId>
+     <artifactId>nostream</artifactId>
+     <version>1.0.0</version>
+   </dependency>
+ </dependencies>
 
 	<build>
 		<plugins>
