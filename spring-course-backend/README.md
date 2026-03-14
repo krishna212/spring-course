@@ -91,7 +91,9 @@ Quick notes so future me can revise fast.
 - `/` -> returns `Spring Course App is Running!`
 - `/api/content` and `/content` -> returns all content.
 - `/api/content/{id}` and `/content/{id}` -> returns one content by id.
-- `POST /api/create` and `POST /create` -> create content from request body.
+- `POST /api/content` and `POST /content` -> create content from request body.
+- `PUT /api/content/{id}` and `PUT /content/{id}` -> update content by id.
+- `DELETE /api/content/{id}` and `DELETE /content/{id}` -> delete content by id.
 
 ## 16) Current architecture
 - Right now it is mostly `Controller -> Repository -> Model`.
@@ -112,6 +114,7 @@ Quick notes so future me can revise fast.
 - Run app (Spring): `mvn spring-boot:run`
 - Run tests: `mvn test`
 - Run built jar: `java -jar target/*.jar`
+- Kill port to restart app : lsof -ti tcp:8080 | xargs kill -9
 - If `mvn` is not installed, use project wrapper with `./mvnw ...`
 
 ## 19) One-line recap
@@ -121,8 +124,12 @@ Quick notes so future me can revise fast.
 - `@SpringBootApplication` -> marks main app class.
 - `@RestController` -> class handles HTTP API requests.
 - `@RequestMapping` -> base route for a controller.
+- `@CrossOrigin` -> allows frontend from different origin/port to call this API.
 - `@GetMapping` -> GET route mapping.
 - `@PostMapping` -> POST route mapping.
+- `@PutMapping` -> PUT route mapping.
+- `@DeleteMapping` -> DELETE route mapping.
+- `@ResponseStatus` -> send custom HTTP status (like `201 Created`, `204 No Content`).
 - `@PathVariable` -> take value from URL path (like Express `req.params`).
 - `@RequestBody` -> take JSON body and map it to Java object.
 - `@Repository` -> marks data access class as Spring-managed bean.
@@ -144,3 +151,17 @@ Quick notes so future me can revise fast.
 ## 23) Frontend error handling mini note
 - API should return right status code (`404` for not found).
 - Frontend checks status code, then shows custom text like: `No content found with that id`.
+
+## 24) Repo structure now (backend + frontend)
+- `backend/` = Spring Boot API project.
+- `frontend/` = React + Vite frontend project.
+- Frontend fetches: `/api/content` (Vite proxy sends to Spring `localhost:8080`).
+
+## 25) Frontend quick run
+- From repo root: `cd frontend && npm install && npm run dev`
+- From repo root: `cd backend && ./mvnw spring-boot:run`
+- Open frontend URL and check browser console for: `content json:`
+
+## 26) CORS mini note
+- If frontend and backend run on different ports, browser blocks calls unless CORS is allowed.
+- `@CrossOrigin` on controller lets frontend call those API routes.

@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 
 import java.util.List;
 import org.springframework.http.HttpStatus;
@@ -18,6 +20,8 @@ import org.springframework.web.server.ResponseStatusException;
 @RestController
 // Base route box. Methods below add sub-routes on top of this.
 @RequestMapping({ "/api/content", "/content" })
+// @CrossOrigin = allow frontend (different port/origin) to call this API.
+@CrossOrigin
 public class ContentController {
     // Controller = API route handler (mediator). It receives request and calls data/logic layer.
     // Right now it calls repository directly; later best practice is call Service first.
@@ -45,12 +49,13 @@ public class ContentController {
 
     // @PostMapping = runs when client sends POST request (create action from frontend).
     @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping({"/api/create", "/create"})
+    @PostMapping({"", "/"})
     public void createContent(@RequestBody Content content) {
         repository.save(content);    
 } 
 
     // PUT = update existing item (replace old item with same id).
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     @PutMapping("/{id}")
     public void update(@RequestBody Content content, @PathVariable Integer id){
         if(!repository.existsById(id)){
@@ -58,4 +63,17 @@ public class ContentController {
         }
         repository.update(content);
     } 
+
+    // DELETE = remove item by id.
+    // @ResponseStatus(NO_CONTENT) = success with no response body.
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable Integer id){
+        if(repository.existsById(id)){
+         repository.deleteById(id);   
+        }
+        else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No event by  ID" + id);
+        }
+    }
 }
