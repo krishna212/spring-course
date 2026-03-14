@@ -42,6 +42,7 @@ public class ContentCollectionRepository {
         return contentList.stream().anyMatch(c -> c.id().equals(id));
     }
     public void update(Content content){
+        // removeIf = remove old item with same id, then add updated item.
         contentList.removeIf(c -> c.id().equals(content.id()));
         contentList.add(content);
     }

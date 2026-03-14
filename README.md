@@ -134,6 +134,7 @@ Quick notes so future me can revise fast.
 - `orElseThrow` takes an exception builder (`() -> new RuntimeException(...)`), not plain text.
 - `ResponseStatusException(HttpStatus.NOT_FOUND, "...")` -> return proper 404 with message.
 - `stream().filter(...).findFirst()` -> find first matching item from list.
+- `removeIf(...)` -> remove list items matching a condition.
 - `LocalDateTime.now()` -> current date-time value.
 
 ## 22) `@PostConstruct` vs `@PostMapping`
