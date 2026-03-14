@@ -28,6 +28,7 @@ public class ContentCollectionRepository {
         return contentList.stream().filter(c -> c.id().equals(id)).findFirst();
     }
 
+    // @PostConstruct = runs once when app starts (startup hook), not an API route.
     @PostConstruct
     private void init() {
         contentList.add(new Content(1, "Spring Boot Tutorial", "Learn Spring Boot in 10 minutes", "PUBLISHED", com.krishnamullangi.spring.course.model.Type.ARTICLE, java.time.LocalDateTime.now(), java.time.LocalDateTime.now(), "https://www.youtube.com/watch?v=vtPkZShrvXQ"));

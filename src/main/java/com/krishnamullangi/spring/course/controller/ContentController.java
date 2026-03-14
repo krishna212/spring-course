@@ -16,8 +16,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
 
 @RestController
+// Base route box. Methods below add sub-routes on top of this.
 @RequestMapping({ "/api/content", "/content" })
 public class ContentController {
+    // Controller = API route handler (mediator). It receives request and calls data/logic layer.
+    // Right now it calls repository directly; later best practice is call Service first.
     // Box to store the repo object for this class.
     private final ContentCollectionRepository repository;
 
@@ -40,11 +43,14 @@ public class ContentController {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Content not found with id: " + id));
     }
 
+    // @PostMapping = runs when client sends POST request (create action from frontend).
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping({"/api/create", "/create"})
     public void createContent(@RequestBody Content content) {
         repository.save(content);    
 } 
+
+    // PUT = update existing item (replace old item with same id).
     @PutMapping("/{id}")
     public void update(@RequestBody Content content, @PathVariable Integer id){
         if(!repository.existsById(id)){
