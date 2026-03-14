@@ -1,6 +1,7 @@
 package com.krishnamullangi.spring.course.model;
 import java.time.LocalDateTime;
 
+// Record = short way to make a data class.
 public record Content(
     Integer id,
     String title, 

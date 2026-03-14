@@ -7,7 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class SpringCourseApplication {
 
 	public static void main(String[] args) {
+		// App starts here. Spring boots the app, creates objects, and runs the server.
 		SpringApplication.run(SpringCourseApplication.class, args);
-
-}
+	}
 }
